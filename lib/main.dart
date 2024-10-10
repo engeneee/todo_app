@@ -10,6 +10,7 @@ class ToDoApp extends StatelessWidget {
     );
   }
 }
+void main() => runApp(ToDoApp());
 
 class ToDoListScreen extends StatefulWidget {
   @override
@@ -40,6 +41,13 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   _addTask(String task) {
     setState(() {
       tasks.add(task);
+      _saveTasks();
+    });
+  }
+
+  _deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
       _saveTasks();
     });
   }
@@ -75,6 +83,12 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(tasks[index]),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      _deleteTask(index);
+                    },
+                  ),
                 );
               },
             ),
